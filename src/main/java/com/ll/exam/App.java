@@ -108,9 +108,16 @@ public class App {
         }
     }
 
+    private void removePost(int id) {
+        Post findPost = findById(id);
+        list.remove(findPost);
+        System.out.println(id + "번 명언이 삭제되었습니다.");
+    }
+
+
     public void run() {
 
-
+        int id;
         System.out.println("=== 명원 SSG ===");
 
         outer:
@@ -133,13 +140,16 @@ public class App {
                         break;
                     case "수정":
                         System.out.print("수정 ID : ");
-                        int id = Integer.parseInt(br.readLine());
+                        id = Integer.parseInt(br.readLine());
                         updatePost(id);
                         break;
                     case "목록":
                         printList();
                         break;
                     case "삭제":
+                        System.out.print("삭제 ID : ");
+                        id = Integer.parseInt(br.readLine());
+                        removePost(id);
                         break;
                     default:
                         System.out.println("올바르게 입력해주세요.");
@@ -159,6 +169,8 @@ public class App {
         }
 
     }
+
+
 
 
 }
