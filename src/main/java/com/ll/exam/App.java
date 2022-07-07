@@ -2,6 +2,7 @@ package com.ll.exam;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -12,6 +13,36 @@ import java.util.ArrayList;
 
 public class App {
     ArrayList<Post> list = new ArrayList<>();
+
+    public void jsonRead(){
+        // FileReader 생성
+        Reader reader = null;
+        try {
+            reader = new FileReader("D:\\CodeLion_Study\\ssg_practice\\src\\main\\java\\com\\ll\\exam\\json\\post.json");
+            Gson gson = new Gson();
+            JSONArray jsonArray = gson.fromJson(reader, JSONArray.class);
+            // JsonObject 객체 출력
+            // {"id":1,"students":[{"id":123,"name":"Tom"},{"id":124,"name":"Jerry"}],"subject":{"name":"Java","professor":"Anna"}}
+//            Object[] objects = obj.toArray();
+//            for (Object object : objects) {
+//                System.out.println(object.toString());
+//            }
+
+            if(jsonArray != null){
+                for(int i = 0; i <jsonArray.size(); i++)
+                    list.add(jsonArray.get(i));
+            }
+
+            for (Post post : list) {
+                System.out.println(post.toString());
+            }
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        // Json 파일 읽어서, Lecture 객체로 변환
+
+    }
     public void jsonWrite(){
         //            Reader reader = new FileReader("db.json");
 
@@ -48,10 +79,11 @@ public class App {
 
     }
     public void run() {
+        jsonRead();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("=== 명원 SSG ===");
 
-        int num = 1;
+        Long num = 1L;
 
         outer:
         while(true){
