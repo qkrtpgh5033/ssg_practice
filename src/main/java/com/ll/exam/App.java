@@ -125,8 +125,10 @@ public class App {
             System.out.print("명령) ");
             try {
                 String cmd = br.readLine().trim();
+                ReQuest reQuest = new ReQuest(cmd);
 
-                switch (cmd){
+
+                switch (reQuest.getPath()){
                     case "종료":
                         jsonWrite();
                         break outer;
@@ -147,9 +149,31 @@ public class App {
                         printList();
                         break;
                     case "삭제":
-                        System.out.print("삭제 ID : ");
-                        id = Integer.parseInt(br.readLine());
-                        removePost(id);
+//                        System.out.print("삭제 ID : ");
+//                        id = Integer.parseInt(br.readLine());
+//                        removePost(id);
+                        int paramId = reQuest.getIntParm("id", 0);
+
+                        if (paramId == 0){
+                            System.out.println("id를 입력해주세요");
+                            continue;
+                        }
+
+                        Post findPost = null;
+                        for (Post post : list) {
+                            if (post.num == paramId) {
+                                findPost = post;
+                            }
+                        }
+
+                        if(findPost == null){
+                            System.out.printf("%d번 명언은 존재하지 않습니다..\n", paramId);
+                            continue;
+                        }
+
+
+                        list.remove(findPost);
+                        System.out.printf("%d번 명언이 삭제되었습니다.\n", paramId);
                         break;
                     default:
                         System.out.println("올바르게 입력해주세요.");
