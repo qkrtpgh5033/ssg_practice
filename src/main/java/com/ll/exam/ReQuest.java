@@ -1,34 +1,53 @@
 package com.ll.exam;
 
+import java.util.HashMap;
+
 public class ReQuest {
     String url;
+    String queryStr;
+    String path;
+
+    HashMap<String, String> queryParams;
 
     public ReQuest(String url) {
         this.url = url;
+        String[] urlBits = url.split("\\?", 2);
+        this.path = urlBits[0];
+        queryParams = new HashMap<>();
+        if(urlBits.length == 2){
+            this.queryStr = urlBits[1];
+
+            String[] paramBits = queryStr.split("&");
+
+            for (String paramBit : paramBits) {
+                String[] paramAndValue = paramBit.split("=");
+
+                if(paramAndValue.length == 1)
+                    continue;
+
+                String paramName = paramAndValue[0].trim();
+                String paramValue = paramAndValue[1].trim();
+                queryParams.put(paramName, paramValue);
+
+
+            }
+        }
+
+
+
     }
 
     /**
      * 삭제?id=N & ~
      */
     public int getIntParm(String paramName, int defaultValue){
-        String[] urlBits = url.split("\\?", 2);
 
-        if(urlBits.length == 1)
+        if(!queryParams.containsKey(paramName))
             return defaultValue;
 
-        urlBits = urlBits[1].split("&");
+        int Id = Integer.parseInt(queryParams.get(paramName));
+        return Id;
 
-        for (String urlBit : urlBits) {
-            String[] paramNameAndValue = urlBit.split("=", 2);
-            String paramName_ = paramNameAndValue[0];
-            String paramValue = paramNameAndValue[1];
-
-            if (paramName.equals(paramName_)) {
-                return Integer.parseInt(paramValue);
-            }
-        }
-
-        return defaultValue;
     }
 
 
