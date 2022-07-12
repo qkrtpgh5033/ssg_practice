@@ -23,10 +23,6 @@ public class App {
         jsonRead();
     }
     public void jsonRead(){
-
-
-
-
         // FileReader 생성
         Reader reader = null;
         try {
