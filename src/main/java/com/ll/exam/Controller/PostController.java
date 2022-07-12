@@ -13,7 +13,6 @@ public class PostController {
     private final PostService postService = new PostService();
 
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
     private int getParamValue(ReQuest reQuest){
         int paramId = reQuest.getIntParm("id", 0);
         if(paramId == 0 ){
@@ -21,7 +20,6 @@ public class PostController {
         }
         return paramId;
     }
-
     public void updatePost(ReQuest reQuest){
         int paramValue = getParamValue(reQuest);
         if (paramValue != 0) {
@@ -29,7 +27,7 @@ public class PostController {
         }
     }
     public void printList(){
-       postService.printList();
+       postService.showList();
     }
     public void removePost(ReQuest reQuest) {
 
