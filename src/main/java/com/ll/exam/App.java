@@ -187,6 +187,9 @@ public class App {
                     case "삭제":
                         removePost2(reQuest);
                         break;
+                    case "빌드":
+                        jsonWrite();
+                        break;
                     default:
                         System.out.println("올바르게 입력해주세요.");
                         break;
