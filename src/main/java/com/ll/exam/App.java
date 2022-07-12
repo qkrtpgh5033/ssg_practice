@@ -85,28 +85,6 @@ public class App {
         }
     }
 
-
-    public void updatePost(int id){
-        Post findPost = findById(id);
-        if(findPost != null){
-            System.out.println(id + "번 명언을 수정합니다.");
-            System.out.println("기존 명언 : " + findPost.talk);
-            System.out.print("새 명언 : ");
-
-            try {
-                String updateTalk = br.readLine();
-                findPost.talk = updateTalk;
-
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            System.out.println(id + "번 명언이 수정되었습니다.");
-
-        }
-    }
-
     public void updatePost(ReQuest reQuest){
         int paramValue = reQuest.getIntParm("id", 0);
 
@@ -148,12 +126,6 @@ public class App {
         }
     }
 
-    private void removePost(int id) {
-        Post findPost = findById(id);
-        list.remove(findPost);
-        System.out.println(id + "번 명언이 삭제되었습니다.");
-    }
-
 
     public void run() {
 
@@ -185,7 +157,7 @@ public class App {
                         printList();
                         break;
                     case "삭제":
-                        removePost2(reQuest);
+                        removePost(reQuest);
                         break;
                     case "빌드":
                         jsonWrite();
@@ -209,7 +181,7 @@ public class App {
 
     }
 
-    private void removePost2(ReQuest reQuest) {
+    private void removePost(ReQuest reQuest) {
 
         int paramId = reQuest.getIntParm("id", 0);
         if (paramId == 0){
