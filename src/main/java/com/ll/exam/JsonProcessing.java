@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JsonProcessing {
-    String path = "D:\\CodeLion_Study\\ssg_practice\\src\\main\\java\\com\\ll\\exam\\json\\data.json";
+    String path = "D:\\CodeLion_Study\\ssg_practice\\data.json";
 
     public ArrayList<Post> jsonRead(){
         ArrayList<Post> list = null;
