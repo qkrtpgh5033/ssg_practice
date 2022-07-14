@@ -2,14 +2,14 @@ package com.ll.exam;
 
 import java.util.HashMap;
 
-public class ReQuest {
+public class Request {
     String url;
     String queryStr;
     String path;
 
     HashMap<String, String> queryParams;
 
-    public ReQuest(String url) {
+    public Request(String url) {
         this.url = url;
         String[] urlBits = url.split("\\?", 2);
         this.path = urlBits[0];

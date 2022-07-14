@@ -1,29 +1,27 @@
 package com.ll.exam;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.ll.exam.Controller.PostController;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Scanner;
 
 public class App {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    Scanner sc;
+
+    public  App(Scanner sc){
+        this.sc = sc;
+    }
     public void run() {
         PostController postController = new PostController();
-        System.out.println("=== 명원 SSG ===");
+        System.out.println("=== 명언 SSG ===");
 
         outer:
         while(true){
             System.out.print("명령) ");
             try {
                 String cmd = br.readLine().trim();
-                ReQuest reQuest = new ReQuest(cmd);
+                Request reQuest = new Request(cmd);
 
 
                 switch (reQuest.getPath()){
