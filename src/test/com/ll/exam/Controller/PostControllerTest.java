@@ -30,6 +30,9 @@ class PostControllerTest {
 
 
         ArrayList<Post> list = postRepository.getList();
+        for (Post i : list) {
+            System.out.println("Post = " + i);
+        }
         Post post = new Post("나에게 불가능이란 없다.", "나폴레옹");
         postRepository.savePost(post);
 
@@ -46,6 +49,11 @@ class PostControllerTest {
         System.out.println("post.getAuthor() = " + post.getAuthor());
         System.out.println("result.getAuthor() = " + result.getAuthor());
         Assertions.assertThat(post).isEqualTo(result);
+
+    }
+
+    @Test
+    public void 조회() {
 
     }
 

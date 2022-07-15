@@ -32,6 +32,12 @@ public class PostRepository {
 
     }
 
+    public void removeAll(){
+        list.clear();
+        jsonProcessing.jsonWrite(list);
+
+    }
+
     private void init(){
         jsonProcessing.jsonExist();
         list = jsonProcessing.jsonRead();

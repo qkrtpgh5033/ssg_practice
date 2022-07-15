@@ -33,4 +33,9 @@ public class Post {
     public void setContent(String content) {
         this.content = content;
     }
+
+    @Override
+    public String toString(){
+        return "Id : %d, 작가 : %s, 명언 : %s \n".formatted(getId(), getAuthor(), getContent());
+    }
 }
