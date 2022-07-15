@@ -40,7 +40,7 @@ public class JsonProcessing {
             JSONObject sObject = new JSONObject(); // 배열 내에 들어갈 json
             sObject.put("id", list.get(i).getId());
             sObject.put("author", list.get(i).getAuthor());
-            sObject.put("talk", list.get(i).getTalk());
+            sObject.put("content", list.get(i).getContent());
             jArray.add(sObject);
         }
         Gson gson = new GsonBuilder().setPrettyPrinting().create();

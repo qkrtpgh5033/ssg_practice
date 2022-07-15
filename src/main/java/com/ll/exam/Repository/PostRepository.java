@@ -21,21 +21,26 @@ public class PostRepository {
     private static long id = 1L;
     private final JsonProcessing jsonProcessing;
 
-
+    public Long getLastId(){
+        return id;
+    }
 
     public PostRepository() {
          list = new ArrayList<>();
          jsonProcessing = new JsonProcessing();
          init();
 
-
     }
 
     private void init(){
         jsonProcessing.jsonExist();
         list = jsonProcessing.jsonRead();
-        id = list.get(list.size()-1).getId(); // 최신번호
-        id += 1L; // 다음번호
+        if(list != null){
+            id = list.get(list.size()-1).getId(); // 최신번호
+            id += 1L; // 다음번호
+        }else{
+            list = new ArrayList<>();
+        }
     }
 
 
@@ -54,7 +59,7 @@ public class PostRepository {
     }
 
 
-    public Post findById(int id){
+    public Post findById(Long id){
         for(int i = 0; i < list.size(); i++){
             if(list.get(i).getId() == id){
                 return list.get(i);

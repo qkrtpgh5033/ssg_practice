@@ -3,7 +3,7 @@ package com.ll.exam;
 public class Post {
     private Long id;
     private String author;
-    private String talk;
+    private String content;
 
     public Long getId() {
         return id;
@@ -13,13 +13,13 @@ public class Post {
         return author;
     }
 
-    public String getTalk() {
-        return talk;
+    public String getContent() {
+        return content;
     }
 
-    public Post(String author, String talk) {
+    public Post(String author, String content) {
         this.author = author;
-        this.talk = talk;
+        this.content = content;
     }
 
     public void setId(Long id) {
@@ -30,7 +30,7 @@ public class Post {
         this.author = author;
     }
 
-    public void setTalk(String talk) {
-        this.talk = talk;
+    public void setContent(String content) {
+        this.content = content;
     }
 }

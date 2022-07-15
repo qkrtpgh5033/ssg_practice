@@ -13,15 +13,15 @@ public class PostController {
     private final PostService postService = new PostService();
 
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private int getParamValue(Request reQuest){
-        int paramId = reQuest.getIntParm("id", 0);
+    private Long getParamValue(Request reQuest){
+        Long paramId = reQuest.getIntParm("id", 0L);
         if(paramId == 0 ){
             System.out.println("id를 입력 해주세요");
         }
         return paramId;
     }
     public void updatePost(Request reQuest){
-        int paramValue = getParamValue(reQuest);
+        Long paramValue = getParamValue(reQuest);
 
         if (paramValue != 0) {
             Post findPost = postService.findById(paramValue);
@@ -30,12 +30,12 @@ public class PostController {
                 System.out.printf("%d번 명언은 존재하지 않습니다..\n", paramValue);
                 return;
             }
-            System.out.printf("기존 명언 : %s\n", findPost.getTalk());
+            System.out.printf("기존 명언 : %s\n", findPost.getContent());
             System.out.print("새 명언 : ");
 
             try {
                 String updateTalk = br.readLine();
-                findPost.setTalk(updateTalk);
+                findPost.setContent(updateTalk);
                 System.out.printf("%d번 명언이 수정되었습니다.", findPost.getId());
 
             } catch (IOException e) {
@@ -52,14 +52,14 @@ public class PostController {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
         for(int i = 0; i < list.size(); i++){
-            System.out.printf("%d / %s / %s\n", list.get(i).getId(), list.get(i).getAuthor(), list.get(i).getTalk());
+            System.out.printf("%d / %s / %s\n", list.get(i).getId(), list.get(i).getAuthor(), list.get(i).getContent());
         }
 
 
     }
     public void removePost(Request reQuest) {
 
-        int paramId = getParamValue(reQuest);
+        Long paramId = getParamValue(reQuest);
         if (paramId != 0) {
             Post findPost = postService.findById(paramId);
 

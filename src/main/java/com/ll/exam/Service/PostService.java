@@ -26,7 +26,7 @@ public class PostService {
 //        }
 //    }
 
-    public Post findById(int id){
+    public Post findById(Long id){
         return postRepository.findById(id);
     }
 

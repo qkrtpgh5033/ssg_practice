@@ -40,12 +40,12 @@ public class Request {
     /**
      * 삭제?id=N & ~
      */
-    public int getIntParm(String paramName, int defaultValue){
+    public Long getIntParm(String paramName, Long defaultValue){
 
         if(!queryParams.containsKey(paramName))
             return defaultValue;
 
-        int Id = Integer.parseInt(queryParams.get(paramName));
+        Long Id = Long.parseLong(queryParams.get(paramName));
         return Id;
 
     }
