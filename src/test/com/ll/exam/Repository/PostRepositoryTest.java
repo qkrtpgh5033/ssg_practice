@@ -7,6 +7,7 @@ import org.junit.jupiter.api.*;
 import java.io.File;
 import java.util.ArrayList;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -53,7 +54,8 @@ class PostRepositoryTest {
         System.out.println("result.getId() = " + result.getId());
         System.out.println("post.getAuthor() = " + post.getAuthor());
         System.out.println("result.getAuthor() = " + result.getAuthor());
-        Assertions.assertThat(post).isEqualTo(result);
+        assertThat(post).isEqualTo(result);
+
 
     }
 
@@ -84,7 +86,7 @@ class PostRepositoryTest {
     }
 
     @Test
-    public void 추가로_생성된_명언을_파일저장_후_전체조회(){
+    public void 명언_생성_및_영속성_확인_후_전체조회(){
 
         addAndSave_Post(new Post("페트릭 헨리", "자유가 아니면 죽음을 달라!"));
 
@@ -106,6 +108,29 @@ class PostRepositoryTest {
 
     }
 
+    @Test
+    public void 명언_삭제_후_영속성_확인(){
+        Post removePost= postRepository.findById(1L);
+        removeAndSave_Post(removePost);
+
+        postRepository = new PostRepository();
+
+        ArrayList<Post> list = postRepository.getList();
+        Post findPost = postRepository.findById(1L);
+
+
+        assertEquals(1, list.size());
+        assertEquals(null, findPost);
+
+
+
+    }
+
+    public void removeAndSave_Post(Post post){
+        System.out.printf("삭제 할 명언 -> Author : %s, Content : %s\n", post.getAuthor(), post.getContent());
+        postRepository.removePost(post);
+        postRepository.buildPosts();
+    }
 
 
     public void addAndSave_Post(Post post){
