@@ -3,6 +3,7 @@ package com.ll.exam;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.ll.exam.DTO.PostDto;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -13,8 +14,8 @@ import java.util.List;
 public class JsonProcessing {
     String path = "D:\\CodeLion_Study\\ssg_practice\\data.json";
 
-    public ArrayList<Post> jsonRead(){
-        ArrayList<Post> list = null;
+    public ArrayList<PostDto> jsonRead(){
+        ArrayList<PostDto> list = null;
         // FileReader 생성
         Reader reader = null;
         try {
@@ -24,7 +25,7 @@ public class JsonProcessing {
             // Json 파일 읽어서, <Post> List로 변환
             if(jsonArray != null){
 
-                list = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Post>>() {
+                list = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<PostDto>>() {
                 }.getType());
             }
 
@@ -36,7 +37,7 @@ public class JsonProcessing {
 
 
 
-    public void jsonWrite(ArrayList<Post> list){
+    public void jsonWrite(ArrayList<PostDto> list){
 
         JSONArray jArray = new JSONArray();
         for(int i = 0; i < list.size(); i++){

@@ -1,6 +1,6 @@
-package com.ll.exam;
+package com.ll.exam.DTO;
 
-public class Post {
+public class PostDto {
     private Long id;
     private String author;
     private String content;
@@ -17,7 +17,7 @@ public class Post {
         return content;
     }
 
-    public Post(String author, String content) {
+    public PostDto(String author, String content) {
         this.author = author;
         this.content = content;
     }

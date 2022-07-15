@@ -1,10 +1,7 @@
 package com.ll.exam.Repository;
-import com.ll.exam.Post;
-import com.ll.exam.Repository.PostRepository;
-import org.assertj.core.api.Assertions;
+import com.ll.exam.DTO.PostDto;
 import org.junit.jupiter.api.*;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.*;
@@ -14,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 테스트 인스턴스의 라이프 사이클을 설정할 때 사용한다
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class PostRepositoryTest {
+class PostDtoRepositoryTest {
 
     private PostRepository postRepository;
     @AfterAll  // 테스트가 모두 끝나면 동작
@@ -33,47 +30,47 @@ class PostRepositoryTest {
     @BeforeEach
     public void beforeEach() {
         postRepository.removeAll();
-        Post post1 = new Post("나폴레옹", "나에게 불가능이란 없다.");
-        Post post2 = new Post("아인슈타인", "천재는 1%의 영감과 99%의 노력이다.");
-        postRepository.savePost(post1);
-        postRepository.savePost(post2);
+        PostDto postDto1 = new PostDto("나폴레옹", "나에게 불가능이란 없다.");
+        PostDto postDto2 = new PostDto("아인슈타인", "천재는 1%의 영감과 99%의 노력이다.");
+        postRepository.savePost(postDto1);
+        postRepository.savePost(postDto2);
         postRepository.buildPosts();
 
     }
 
     @Test
     public void 저장() {
-        ArrayList<Post> list = postRepository.getList();
+        ArrayList<PostDto> list = postRepository.getList();
 
-        Post post = new Post("이순신", "나의 죽음을 적들에게 알리지 마라.");
-        postRepository.savePost(post);
+        PostDto postDTO = new PostDto("이순신", "나의 죽음을 적들에게 알리지 마라.");
+        postRepository.savePost(postDTO);
         postRepository.buildPosts();
 
-        Post result = postRepository.findById(post.getId());
-        System.out.println("post.getId() = " + post.getId());
+        PostDto result = postRepository.findById(postDTO.getId());
+        System.out.println("post.getId() = " + postDTO.getId());
         System.out.println("result.getId() = " + result.getId());
-        System.out.println("post.getAuthor() = " + post.getAuthor());
+        System.out.println("post.getAuthor() = " + postDTO.getAuthor());
         System.out.println("result.getAuthor() = " + result.getAuthor());
-        assertThat(post).isEqualTo(result);
+        assertThat(postDTO).isEqualTo(result);
 
 
     }
 
     @Test
     public void 조회() {
-        ArrayList<Post> list = postRepository.getList();
+        ArrayList<PostDto> list = postRepository.getList();
 
-        Post findPost = postRepository.findById(1L);
+        PostDto findPostDto = postRepository.findById(1L);
 
-        assertEquals(1L, findPost.getId());
-        assertEquals("나에게 불가능이란 없다.", findPost.getContent());
-        assertEquals("나폴레옹", findPost.getAuthor());
+        assertEquals(1L, findPostDto.getId());
+        assertEquals("나에게 불가능이란 없다.", findPostDto.getContent());
+        assertEquals("나폴레옹", findPostDto.getAuthor());
 
     }
 
     @Test
     public void 전체조회(){
-        ArrayList<Post> list = postRepository.getList();
+        ArrayList<PostDto> list = postRepository.getList();
 
         assertEquals(2, list.size());
         assertEquals(1, list.get(0).getId());
@@ -88,10 +85,10 @@ class PostRepositoryTest {
     @Test
     public void 명언_생성_및_영속성_확인_후_전체조회(){
 
-        addAndSave_Post(new Post("페트릭 헨리", "자유가 아니면 죽음을 달라!"));
+        addAndSave_Post(new PostDto("페트릭 헨리", "자유가 아니면 죽음을 달라!"));
 
         postRepository = new PostRepository();
-        ArrayList<Post> list = postRepository.getList();
+        ArrayList<PostDto> list = postRepository.getList();
         assertEquals(3, list.size());
 
         assertEquals(1, list.get(0).getId());
@@ -110,31 +107,31 @@ class PostRepositoryTest {
 
     @Test
     public void 명언_삭제_후_영속성_확인(){
-        Post removePost= postRepository.findById(1L);
-        removeAndSave_Post(removePost);
+        PostDto removePostDto = postRepository.findById(1L);
+        removeAndSave_Post(removePostDto);
 
         postRepository = new PostRepository();
 
-        ArrayList<Post> list = postRepository.getList();
-        Post findPost = postRepository.findById(1L);
+        ArrayList<PostDto> list = postRepository.getList();
+        PostDto findPostDto = postRepository.findById(1L);
 
 
         assertEquals(1, list.size());
-        assertEquals(null, findPost);
+        assertEquals(null, findPostDto);
 
 
 
     }
 
-    public void removeAndSave_Post(Post post){
-        System.out.printf("삭제 할 명언 -> Author : %s, Content : %s\n", post.getAuthor(), post.getContent());
-        postRepository.removePost(post);
+    public void removeAndSave_Post(PostDto postDTO){
+        System.out.printf("삭제 할 명언 -> Author : %s, Content : %s\n", postDTO.getAuthor(), postDTO.getContent());
+        postRepository.removePost(postDTO);
         postRepository.buildPosts();
     }
 
 
-    public void addAndSave_Post(Post post){
-        postRepository.savePost(post);
+    public void addAndSave_Post(PostDto postDTO){
+        postRepository.savePost(postDTO);
         postRepository.buildPosts(); // 파일 저장
 
     }
