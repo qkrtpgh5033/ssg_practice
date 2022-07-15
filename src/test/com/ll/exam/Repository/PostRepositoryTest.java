@@ -16,26 +16,31 @@ import static org.junit.jupiter.api.Assertions.*;
 class PostRepositoryTest {
 
     private PostRepository postRepository;
-    @AfterAll  // 테스트가 모두 끝나면 동작
-    public void afterEach() {
-        postRepository.removeAll();
-    }
+//    @AfterAll  // 테스트가 모두 끝나면 동작
+//    public void afterEach() {
+//        postRepository.removeAll();
+//    }
 
     @BeforeAll
     public void beforeAll() {
         postRepository = new PostRepository();
+        postRepository.removeAll();
+
+        Post post1 = new Post("나폴레옹", "나에게 불가능이란 없다.");
+        Post post2 = new Post("아인슈타인", "천재는 1%의 영감과 99%의 노력이다.");
+        postRepository.savePost(post1);
+        postRepository.savePost(post2);
+        postRepository.buildPosts();
+    }
+
+    @AfterEach
+    public void afterEach() {
+        postRepository.buildPosts(); // Test가 끝날 때 마다 파일 저장
     }
 
     @BeforeEach
     public void beforeEach() {
-
-        ArrayList<Post> list = postRepository.getList();
-        for (Post i : list) {
-            System.out.println("Post = " + i);
-        }
-        Post post = new Post("나폴레옹", "나에게 불가능이란 없다.");
-        postRepository.savePost(post);
-
+        postRepository.init(); // Test 실행전 파일 읽어오기
     }
 
     @Test
@@ -44,7 +49,7 @@ class PostRepositoryTest {
 
         Post post = new Post("이순신", "나의 죽음을 적들에게 알리지 마라.");
         postRepository.savePost(post);
-
+        postRepository.buildPosts();
 
         Post result = postRepository.findById(post.getId());
         System.out.println("post.getId() = " + post.getId());
@@ -53,20 +58,12 @@ class PostRepositoryTest {
         System.out.println("result.getAuthor() = " + result.getAuthor());
         Assertions.assertThat(post).isEqualTo(result);
 
-        for (Post i : list) {
-            System.out.println("?" + i);
-        }
-
-
     }
 
     @Test
     public void 조회() {
-        System.out.println("--- 조회 --- ");
         ArrayList<Post> list = postRepository.getList();
-        for (Post i : list) {
-            System.out.println("?" + i);
-        }
+
         Post findPost = postRepository.findById(1L);
 
         assertEquals(1L, findPost.getId());
@@ -74,6 +71,15 @@ class PostRepositoryTest {
         assertEquals("나폴레옹", findPost.getAuthor());
 
     }
+
+    @Test
+    public void 전체조회(){
+        ArrayList<Post> list = postRepository.getList();
+        assertEquals(2, list.size());
+        assertEquals(1, list.get(0).getId());
+
+    }
+
 
 
 }

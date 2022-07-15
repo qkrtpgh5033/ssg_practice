@@ -35,10 +35,11 @@ public class PostRepository {
     public void removeAll(){
         list.clear();
         jsonProcessing.jsonWrite(list);
+        id = 1L;
 
     }
 
-    private void init(){
+    public void init(){
         jsonProcessing.jsonExist();
         list = jsonProcessing.jsonRead();
         if(list.size() > 0){

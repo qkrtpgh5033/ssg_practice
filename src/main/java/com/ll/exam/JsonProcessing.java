@@ -34,6 +34,8 @@ public class JsonProcessing {
         return list;
     }
 
+
+
     public void jsonWrite(ArrayList<Post> list){
 
         JSONArray jArray = new JSONArray();
