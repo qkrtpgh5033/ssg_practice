@@ -16,31 +16,28 @@ import static org.junit.jupiter.api.Assertions.*;
 class PostRepositoryTest {
 
     private PostRepository postRepository;
-//    @AfterAll  // 테스트가 모두 끝나면 동작
-//    public void afterEach() {
-//        postRepository.removeAll();
-//    }
+    @AfterAll  // 테스트가 모두 끝나면 동작
+    public void afterAll() {
+        postRepository.removeAll();
+    }
 
     @BeforeAll
     public void beforeAll() {
         postRepository = new PostRepository();
-        postRepository.removeAll();
 
+    }
+
+
+
+    @BeforeEach
+    public void beforeEach() {
+        postRepository.removeAll();
         Post post1 = new Post("나폴레옹", "나에게 불가능이란 없다.");
         Post post2 = new Post("아인슈타인", "천재는 1%의 영감과 99%의 노력이다.");
         postRepository.savePost(post1);
         postRepository.savePost(post2);
         postRepository.buildPosts();
-    }
 
-    @AfterEach
-    public void afterEach() {
-        postRepository.buildPosts(); // Test가 끝날 때 마다 파일 저장
-    }
-
-    @BeforeEach
-    public void beforeEach() {
-        postRepository.init(); // Test 실행전 파일 읽어오기
     }
 
     @Test
@@ -75,8 +72,45 @@ class PostRepositoryTest {
     @Test
     public void 전체조회(){
         ArrayList<Post> list = postRepository.getList();
+
         assertEquals(2, list.size());
         assertEquals(1, list.get(0).getId());
+        assertEquals("나에게 불가능이란 없다.", list.get(0).getContent());
+        assertEquals("나폴레옹", list.get(0).getAuthor());
+
+        assertEquals(2, list.get(1).getId());
+        assertEquals("천재는 1%의 영감과 99%의 노력이다.", list.get(1).getContent());
+        assertEquals("아인슈타인", list.get(1).getAuthor());
+    }
+
+    @Test
+    public void 추가로_생성된_명언을_파일저장_후_전체조회(){
+
+        addAndSave_Post(new Post("페트릭 헨리", "자유가 아니면 죽음을 달라!"));
+
+        postRepository = new PostRepository();
+        ArrayList<Post> list = postRepository.getList();
+        assertEquals(3, list.size());
+
+        assertEquals(1, list.get(0).getId());
+        assertEquals("나에게 불가능이란 없다.", list.get(0).getContent());
+        assertEquals("나폴레옹", list.get(0).getAuthor());
+
+        assertEquals(2, list.get(1).getId());
+        assertEquals("천재는 1%의 영감과 99%의 노력이다.", list.get(1).getContent());
+        assertEquals("아인슈타인", list.get(1).getAuthor());
+
+        assertEquals(3, list.get(2).getId());
+        assertEquals("자유가 아니면 죽음을 달라!", list.get(2).getContent());
+        assertEquals("페트릭 헨리", list.get(2).getAuthor());
+
+    }
+
+
+
+    public void addAndSave_Post(Post post){
+        postRepository.savePost(post);
+        postRepository.buildPosts(); // 파일 저장
 
     }
 
