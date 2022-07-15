@@ -41,7 +41,7 @@ public class PostRepository {
     private void init(){
         jsonProcessing.jsonExist();
         list = jsonProcessing.jsonRead();
-        if(list != null){
+        if(list.size() > 0){
             id = list.get(list.size()-1).getId(); // 최신번호
             id += 1L; // 다음번호
         }else{

@@ -23,6 +23,7 @@ public class JsonProcessing {
             JSONArray jsonArray = gson.fromJson(reader, JSONArray.class);
             // Json 파일 읽어서, <Post> List로 변환
             if(jsonArray != null){
+
                 list = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Post>>() {
                 }.getType());
             }
