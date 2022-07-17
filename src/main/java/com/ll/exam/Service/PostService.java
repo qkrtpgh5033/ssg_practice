@@ -1,11 +1,8 @@
 package com.ll.exam.Service;
 
-import com.ll.exam.Post;
+import com.ll.exam.Domain.Post;
 import com.ll.exam.Repository.PostRepository;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class PostService {

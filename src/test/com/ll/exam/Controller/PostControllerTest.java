@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 테스트 인스턴스의 라이프 사이클을 설정할 때 사용한다
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class PostDtoControllerTest {
+class PostControllerTest {
 
     @AfterAll
     public void afterAll(){

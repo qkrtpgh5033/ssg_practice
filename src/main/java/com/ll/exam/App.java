@@ -13,14 +13,14 @@ public class App {
         this.sc = sc;
     }
     public void run() {
-        PostController postController = new PostController();
+        PostController postController = new PostController(sc);
         System.out.println("=== 명언 SSG ===");
 
         outer:
         while(true){
             System.out.print("명령) ");
-            try {
-                String cmd = br.readLine().trim();
+
+                String cmd = sc.nextLine().trim();
                 Request reQuest = new Request(cmd);
 
 
@@ -50,9 +50,6 @@ public class App {
 
                 }
 
-            }catch (IOException e){
-
-            }
         }
 
     }

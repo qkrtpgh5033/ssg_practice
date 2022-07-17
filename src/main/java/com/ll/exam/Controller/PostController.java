@@ -1,18 +1,19 @@
 package com.ll.exam.Controller;
 
-import com.ll.exam.Post;
+import com.ll.exam.Domain.Post;
 import com.ll.exam.Request;
 import com.ll.exam.Service.PostService;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class PostController {
     private final PostService postService = new PostService();
+    private Scanner sc;
+    public PostController(Scanner sc) {
+        this.sc = sc;
+    }
 
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private Long getParamValue(Request reQuest){
         Long paramId = reQuest.getIntParm("id", 0L);
         if(paramId == 0 ){
@@ -30,17 +31,21 @@ public class PostController {
                 System.out.printf("%d번 명언은 존재하지 않습니다..\n", paramValue);
                 return;
             }
-            System.out.printf("기존 명언 : %s\n", findPost.getContent());
-            System.out.print("새 명언 : ");
+            System.out.printf("명언(기존) : %s\n", findPost.getContent());
+            System.out.print("명언 : ");
 
-            try {
-                String updateTalk = br.readLine();
-                findPost.setContent(updateTalk);
-                System.out.printf("%d번 명언이 수정되었습니다.", findPost.getId());
+            String updateTalk = sc.nextLine();
+            findPost.setContent(updateTalk);
 
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
+            System.out.printf("작가(기존) : %s\n", findPost.getAuthor());
+            System.out.print("작가 : ");
+
+            String updateAuthor = sc.nextLine();
+            findPost.setAuthor(updateAuthor);
+
+            System.out.printf("%d번 명언이 수정되었습니다.\n", findPost.getId());
+
+
         }
 
 
@@ -74,20 +79,17 @@ public class PostController {
 
     public void registerPost()  {
 
-        try {
 
-            System.out.print("명언 : ");
-            String talk = br.readLine();
-            System.out.print("작가 : ");
-            String author = br.readLine();
+        System.out.print("명언 : ");
+        String talk = sc.nextLine();
+        System.out.print("작가 : ");
+        String author = sc.nextLine();
 
-            Post savePost = new Post(talk, author);
-            Post post = postService.registerPost(savePost);
-            System.out.println(post.getId()+"번이 등록되었습니다.");
+        Post savePost = new Post(author, talk);
+        Post post = postService.registerPost(savePost);
+        System.out.println(post.getId()+"번 명언이 등록되었습니다.");
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
 
     }
 

@@ -1,19 +1,12 @@
 package com.ll.exam.Repository;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.ll.exam.JsonProcessing;
-import com.ll.exam.Post;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.ll.exam.DAO.JsonProcessing;
+import com.ll.exam.Domain.Post;
 
-import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
- * 데이터 보관 및 찾는 용도
+ * 데이터 보관 및 관리
  */
 public class PostRepository {
 
